@@ -41,15 +41,39 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PlaylistsCtrl', function($scope,$ionicScrollDelegate) {
+ // var items =[];
+ //   for(var i=1;i<=20;i++){
+ //    items.push({title:"Item "+i , id:i})
+ //   }
+ //  $scope.playlists = items;
+
+  $scope.scrollTrigger = function () {
+    console.log("Scroll Triggered");
+
+  };
+
+  $scope.scrollTop = function() {
+    $ionicScrollDelegate.scrollTop();
+  };
+
+  $scope.scrollMainToTop = function() {
+    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+  };
+  $scope.scrollSmallToTop = function() {
+    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+  };
+
+
+// Playing with infinte scroll
+$scope.loadMore = function() {
+    $scope.items.push({ id: $scope.items.length , title:"Item "+($scope.items.length+1)});
+    if ( $scope.items.length == 100 ) {
+      $scope.noMoreItemsAvailable = true;
+    }
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+  $scope.items = [];
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {

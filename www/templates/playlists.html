@@ -1,9 +1,29 @@
-<ion-view view-title="Playlists">
-  <ion-content>
+<ion-view view-title="Infinite Scroll playGround with {{items.length}} items">
+
+  <ion-content class="has-header"
+  		has-bouncing="false"
+  		on-scroll="scrollTrigger()"
+  		delegate-handle="mainScroll" >
     <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+      <ion-item ng-repeat="playlist in items" href="#/app/playlists/{{playlist.id}}">
         {{playlist.title}}
       </ion-item>
     </ion-list>
+
+      <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+
+
+	  <button ng-click="scrollMainToTop()">
+      Scroll Delegate Handle Use 
+    </button>
+
+	<ion-scroll delegate-handle="small" style="height: 100px;">
+      <button ng-click="scrollSmallToTop()">
+        Scroll small area to top!
+      </button>
+    </ion-scroll>
+
+    <button ng-click="scrollTop()">Scroll to Top!</button>
+
   </ion-content>
 </ion-view>
